@@ -8,7 +8,6 @@ services:
   pdf-database:
     image: postgres:latest
     container_name: pdf-database
-    #restart: always
     ports:
       - "5432:5432"
     environment:
@@ -17,12 +16,11 @@ services:
       POSTGRES_PASSWORD: pdf
     volumes:
       - pdf-database-volume:/var/lib/postgresql/data
+      
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
     hostname: rabbitmq
-    #restart: unless-stopped
-
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -33,3 +31,10 @@ services:
 
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
+      
+  pdf-ingestor:
+    container_name: pdf-ingestor-service
+    build:
+        context: .
+    ports:
+      - "8080:8080"

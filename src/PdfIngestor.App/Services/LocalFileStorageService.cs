@@ -5,7 +5,7 @@ namespace PdfIngestor.App.Services;
 
 public class LocalFileStorageService : IFileStorageService
 {
-    private readonly string _storagePath = Path.Combine(Directory.GetCurrentDirectory(), "Storage", "PdfFiles");
+    private readonly string _storagePath = Path.Combine(AppContext.BaseDirectory, "Storage", "PdfFiles");
     
     public LocalFileStorageService(ILogger<LocalFileStorageService> logger)
     {
