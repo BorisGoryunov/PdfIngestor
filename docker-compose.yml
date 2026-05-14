@@ -1,0 +1,35 @@
+volumes:
+  pdf-database-volume:
+    name: pdf-database-volume
+  rabbitmq-data:
+    name: rabbitmq-data-volume
+
+services:
+  pdf-database:
+    image: postgres:latest
+    container_name: pdf-database
+    #restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: pdf
+      POSTGRES_USER: pdf
+      POSTGRES_PASSWORD: pdf
+    volumes:
+      - pdf-database-volume:/var/lib/postgresql/data
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    #restart: unless-stopped
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
