@@ -31,6 +31,11 @@ public sealed class OutboxPublisherService : BackgroundService
             {
                 await ProcessMessages(stoppingToken);
             }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("Operation cancelled");
+                break;
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Outbox processing failed");
